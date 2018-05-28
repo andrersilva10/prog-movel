@@ -30,7 +30,7 @@ public class CadastroTarefaActivity extends AppCompatActivity {
 
     public void cadastrar(){
         Tarefa tarefa = new Tarefa();
-        tarefa.nome = editTextNomeTarefa.getText().toString();
+        tarefa.setNome(editTextNomeTarefa.getText().toString());
         TarefaRepo repo = new TarefaRepo(getApplicationContext());
         repo.create(tarefa);
     }

@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Tarefa tarefa = (Tarefa)parent.getItemAtPosition(position);
-                Toast.makeText(MainActivity.this,tarefa.nome,Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, tarefa.getNome(),Toast.LENGTH_LONG).show();
             }
         });
 
