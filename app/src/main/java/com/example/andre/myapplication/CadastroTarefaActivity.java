@@ -5,18 +5,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.andre.myapplication.model.Tarefa;
 import com.example.andre.myapplication.repo.TarefaRepo;
 
+import java.util.Date;
+
 public class CadastroTarefaActivity extends AppCompatActivity {
-    EditText editTextNomeTarefa;
-    Button btnSalvar;
+    private EditText editTextNomeTarefa;
+    private EditText editTextDataCriacao;
+    private Button btnSalvar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_tarefa);
         editTextNomeTarefa = findViewById(R.id.editTextNomeTarefa);
+        editTextDataCriacao = findViewById(R.id.editTextDataCriacao);
+
         btnSalvar = findViewById(R.id.buttonSalvar);
 
         btnSalvar.setOnClickListener(new View.OnClickListener() {
@@ -31,6 +37,8 @@ public class CadastroTarefaActivity extends AppCompatActivity {
     public void cadastrar(){
         Tarefa tarefa = new Tarefa();
         tarefa.setNome(editTextNomeTarefa.getText().toString());
+        Toast.makeText(this,editTextDataCriacao.getText().toString(),Toast.LENGTH_LONG);
+        Date date = new Date();
         TarefaRepo repo = new TarefaRepo(getApplicationContext());
         repo.create(tarefa);
     }

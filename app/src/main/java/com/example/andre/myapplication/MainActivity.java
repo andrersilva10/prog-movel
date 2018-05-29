@@ -16,6 +16,7 @@ import com.example.andre.myapplication.model.Tarefa;
 import com.example.andre.myapplication.repo.TarefaRepo;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         listaAdapter = new ArrayAdapter<Tarefa>(this,
                 android.R.layout.simple_list_item_1,
-                lista);
+                lista != null ? lista : new ArrayList<Tarefa>());
 
         listViewTarefas.setAdapter(listaAdapter);
     }

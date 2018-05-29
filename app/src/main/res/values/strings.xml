@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="menuItemNovo">New Task</string>
+    <string name="nome">Name</string>
+    <string name="salvar">Save</string>
+    <string name="data_entrega">Delivery Date</string>
 </resources>
