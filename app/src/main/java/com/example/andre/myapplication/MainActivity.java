@@ -77,11 +77,13 @@ public class MainActivity extends AppCompatActivity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        if(lista != null && lista.size() > 0){
+            listaAdapter = new ArrayAdapter<Tarefa>(this,
+                    android.R.layout.simple_list_item_1,
+                    lista != null ? lista : new ArrayList<Tarefa>());
 
-        listaAdapter = new ArrayAdapter<Tarefa>(this,
-                android.R.layout.simple_list_item_1,
-                lista != null ? lista : new ArrayList<Tarefa>());
+            listViewTarefas.setAdapter(listaAdapter);
+        }
 
-        listViewTarefas.setAdapter(listaAdapter);
     }
 }

@@ -4,4 +4,5 @@
     <string name="nome">Name</string>
     <string name="salvar">Save</string>
     <string name="data_entrega">Delivery Date</string>
+    <string name="cancelar">cancel</string>
 </resources>

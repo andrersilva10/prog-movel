@@ -16,6 +16,7 @@ public class CadastroTarefaActivity extends AppCompatActivity {
     private EditText editTextNomeTarefa;
     private EditText editTextDataCriacao;
     private Button btnSalvar;
+    private Button btnCancelar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,11 +25,19 @@ public class CadastroTarefaActivity extends AppCompatActivity {
         editTextDataCriacao = findViewById(R.id.editTextDataCriacao);
 
         btnSalvar = findViewById(R.id.buttonSalvar);
+        btnCancelar = findViewById(R.id.buttonCancelar);
 
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cadastrar();
+            }
+        });
+
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CadastroTarefaActivity.this.finish();
             }
         });
     }
