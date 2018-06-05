@@ -34,12 +34,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Tarefa tarefa = (Tarefa)parent.getItemAtPosition(position);
-                Toast.makeText(MainActivity.this, tarefa.getNome(),Toast.LENGTH_LONG).show();
+                Intent i = new Intent(MainActivity.this,CadastroTarefaActivity.class);
+                i.putExtra("tarefa",tarefa);
+                startActivity(i);
             }
         });
 
-        TarefaRepo repo = new TarefaRepo(getApplicationContext());
-        List tarefas = repo.findAll();
 
         popularLista();
     }

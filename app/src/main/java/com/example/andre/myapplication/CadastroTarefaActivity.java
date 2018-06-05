@@ -27,10 +27,18 @@ public class CadastroTarefaActivity extends AppCompatActivity {
         btnSalvar = findViewById(R.id.buttonSalvar);
         btnCancelar = findViewById(R.id.buttonCancelar);
 
+        final Tarefa tarefa = (Tarefa)getIntent().getSerializableExtra("tarefa");
+        popularCampos(tarefa);
+        final boolean novaTarefa = tarefa == null;
+
+
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cadastrar();
+                if(novaTarefa)
+                    salvarTarefa();
+                else
+                    atualizarTarefa(tarefa);
             }
         });
 
@@ -42,13 +50,31 @@ public class CadastroTarefaActivity extends AppCompatActivity {
         });
     }
 
+    private void popularCampos(Tarefa tarefa){
+        if(tarefa == null) return;
+        editTextNomeTarefa.setText(tarefa.getNome());
+        editTextDataCriacao.setText(tarefa.getDataCriacao());
 
-    public void cadastrar(){
+    }
+
+    private void salvarTarefa(){
         Tarefa tarefa = new Tarefa();
         tarefa.setNome(editTextNomeTarefa.getText().toString());
-        Toast.makeText(this,editTextDataCriacao.getText().toString(),Toast.LENGTH_LONG);
-        Date date = new Date();
+        tarefa.setDataCriacao(editTextDataCriacao.getText().toString());
         TarefaRepo repo = new TarefaRepo(getApplicationContext());
         repo.create(tarefa);
+        Toast.makeText(this,"Nova tarefa criada com sucesso",Toast.LENGTH_LONG).show();
+
     }
+
+    private void atualizarTarefa(Tarefa tarefa){
+        if(tarefa.getId() != 0){
+            TarefaRepo repo = new TarefaRepo(getApplicationContext());
+            tarefa.setNome(editTextNomeTarefa.getText().toString());
+            tarefa.setDataCriacao(editTextDataCriacao.getText().toString());
+            repo.update(tarefa);
+            Toast.makeText(this,"Tarefa atualizada com sucesso",Toast.LENGTH_LONG).show();
+        }
+    }
+
 }

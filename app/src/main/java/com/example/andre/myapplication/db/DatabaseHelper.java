@@ -21,7 +21,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "teste.sqlite";
 
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION =7;
+    private static final int DATABASE_VERSION =8;
 
     // the DAO object we use to access the SimpleData table
     //pressure
@@ -56,7 +56,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             List<String> allSql = new ArrayList<String>();
             switch(newVersion)
             {
-                case 7:
+                case 8:
                     //allSql.add("alter table AdData add column `new_col` VARCHAR");
                     //allSql.add("alter table AdData add column `new_col2` VARCHAR");
                     //allSql.add("alter table Tarefa add column `data_criacao` date");

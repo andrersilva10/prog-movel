@@ -3,10 +3,11 @@ package com.example.andre.myapplication.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @DatabaseTable
-public class Tarefa {
+public class Tarefa implements Serializable{
     @DatabaseField(generatedId=true)
     private int id;
 
@@ -14,7 +15,7 @@ public class Tarefa {
     private String nome;
 
     @DatabaseField
-    private Date dataCriacao;
+    private String dataCriacao;
 
     @DatabaseField
     private Date dataEntrega;
@@ -35,11 +36,11 @@ public class Tarefa {
         this.nome = nome;
     }
 
-    public Date getDataCriacao() {
+    public String getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
+    public void setDataCriacao(String dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
