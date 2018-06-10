@@ -1,10 +1,15 @@
 package com.example.andre.myapplication.model;
 
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.zip.CheckedOutputStream;
 
 @DatabaseTable
 public class Tarefa implements Serializable{
@@ -18,18 +23,21 @@ public class Tarefa implements Serializable{
     private String dataCriacao;
 
     @DatabaseField
-    private Date dataEntrega;
+    private String dataEntrega;
 
     @DatabaseField
     private boolean terminada;
 
-    @Override
-    public String toString() {
-        return getNome();
-    }
+    @ForeignCollectionField(eager=false)
+    private Collection<Anotacao> anotacoes;
 
+    //region GETS e SETS
     public String getNome() {
         return nome;
+    }
+
+    public Collection<Anotacao> getAnotacoes() {
+        return anotacoes;
     }
 
     public void setNome(String nome) {
@@ -44,11 +52,11 @@ public class Tarefa implements Serializable{
         this.dataCriacao = dataCriacao;
     }
 
-    public Date getDataEntrega() {
+    public String getDataEntrega() {
         return dataEntrega;
     }
 
-    public void setDataEntrega(Date dataEntrega) {
+    public void setDataEntrega(String dataEntrega) {
         this.dataEntrega = dataEntrega;
     }
 
@@ -66,5 +74,16 @@ public class Tarefa implements Serializable{
 
     public void setId(int id) {
         this.id = id;
+    }
+    //endregion
+
+    @Override
+    public String toString() {
+        return getNome();
+    }
+
+    public void addAnotacao(Anotacao anotacao){
+        if(anotacoes == null) anotacoes = new ArrayList<>();
+        anotacoes.add(anotacao);
     }
 }

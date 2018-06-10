@@ -5,4 +5,5 @@
     <string name="salvar">Save</string>
     <string name="data_entrega">Delivery Date</string>
     <string name="cancelar">cancel</string>
+    <string name="atualizar">Refresh</string>
 </resources>

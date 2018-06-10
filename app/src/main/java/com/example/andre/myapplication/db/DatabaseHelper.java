@@ -9,6 +9,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.andre.myapplication.model.Anotacao;
 import com.example.andre.myapplication.model.Tarefa;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
@@ -21,11 +22,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "teste.sqlite";
 
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION =8;
+    private static final int DATABASE_VERSION =13;
 
     // the DAO object we use to access the SimpleData table
     //pressure
     private Dao<Tarefa, Integer> tarefaDao = null;
+    private Dao<Anotacao, Integer> anotacaoDao = null;
 
     public DatabaseHelper(Context context) {
 
@@ -36,7 +38,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase database,ConnectionSource connectionSource) {
         try {
             TableUtils.createTable(connectionSource, Tarefa.class);
-
+            TableUtils.createTable(connectionSource,Anotacao.class);
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -51,30 +53,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
 
             Dao<Tarefa, Integer> dao = getTarefaDao();
-
-
-            List<String> allSql = new ArrayList<String>();
-            switch(newVersion)
-            {
-                case 8:
-                    //allSql.add("alter table AdData add column `new_col` VARCHAR");
-                    //allSql.add("alter table AdData add column `new_col2` VARCHAR");
-                    //allSql.add("alter table Tarefa add column `data_criacao` date");
-                    //allSql.add("alter table Tarefa add column `data_entrega` date");
-                    try {
-                        TableUtils.dropTable(connectionSource, Tarefa.class, false);
-                        TableUtils.createTable(connectionSource, Tarefa.class);
-                    }catch(java.sql.SQLException err){
-
-                    }
-                    //allSql.add("alter table Tarefa add column `terminada` boolean default(false)");
-
-                    break;
-            }
-            for (String sql : allSql) {
-                db.execSQL(sql);
-            }
-        } catch (SQLException e) {
+            TableUtils.dropTable(connectionSource,Tarefa.class,true);
+            TableUtils.dropTable(connectionSource,Anotacao.class,true);
+            onCreate(db,connectionSource);
+        } catch (Exception e) {
             Log.e(DatabaseHelper.class.getName(), "exception during onUpgrade", e);
             throw new RuntimeException(e);
         }
@@ -92,4 +74,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return tarefaDao;
     }
 
+    public Dao<Anotacao, Integer> getAnotacaoDao(){
+        if(null == anotacaoDao){
+            try {
+                anotacaoDao = getDao(Anotacao.class);
+
+            }catch (java.sql.SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return anotacaoDao;
+    }
 }

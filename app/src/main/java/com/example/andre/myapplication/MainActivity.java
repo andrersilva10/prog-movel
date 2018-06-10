@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
                 i = new Intent(this,CadastroTarefaActivity.class);
                 startActivity(i);
                 break;
+            case R.id.menuItemAtualizar:
+                popularLista();
+                break;
         }
         return true;
     }
