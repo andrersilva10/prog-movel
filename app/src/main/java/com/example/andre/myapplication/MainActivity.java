@@ -2,11 +2,15 @@ package com.example.andre.myapplication;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ActionMode;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -29,12 +33,90 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.getSharedPreferences("MinhasPreferencias", MODE_PRIVATE).edit().clear().apply();
         if(contemPreferencias()){
             Intent i = new Intent(this,CadastroTarefaActivity.class);
             i.putExtra("temPreferencias", true);
             startActivity(i);
         }
         listViewTarefas = findViewById(R.id.listViewTarefas);
+        popularLista();
+        listViewTarefas.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listViewTarefas.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+            @Override
+            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+                boolean selecionado = listViewTarefas.isItemChecked(position);
+
+                View view = listViewTarefas.getChildAt(position);
+
+                if (selecionado){
+                    view.setBackgroundColor(Color.LTGRAY);
+                }else{
+                    view.setBackgroundColor(Color.TRANSPARENT);
+                }
+
+                int totalSelecionados = listViewTarefas.getCheckedItemCount();
+
+                if (totalSelecionados > 0){
+
+                    mode.setTitle("Lorem ipsum");
+                }
+
+                mode.invalidate();
+            }
+
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                MenuInflater inflater = mode.getMenuInflater();
+                inflater.inflate(R.menu.menu_tarefa_selecionada, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                if (listViewTarefas.getCheckedItemCount() > 1){
+                    menu.getItem(0).setVisible(false);
+                }else{
+                    menu.getItem(0).setVisible(true);
+                }
+
+                return true;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.menuItemEditar:
+
+                        for (int posicao = listViewTarefas.getChildCount(); posicao >= 0; posicao--){
+
+                            if (listViewTarefas.isItemChecked(posicao)){
+
+                                Tarefa tarefa = (Tarefa)(listViewTarefas.getAdapter().getItem(posicao));
+                                Intent i = new Intent(MainActivity.this,CadastroTarefaActivity.class);
+                                i.putExtra("tarefa",tarefa);
+                                startActivity(i);
+                            }
+                        }
+
+                        mode.finish();
+                        return true;
+
+                    case R.id.menuItemRemover:
+                        mode.finish();
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+
+            }
+        });
+        /*
         listViewTarefas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -44,7 +126,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        popularLista();
+        */
+
     }
 
     @Override

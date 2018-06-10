@@ -7,4 +7,6 @@
     <string name="cancelar">cancel</string>
     <string name="atualizar">Refresh</string>
     <string name="nova_anotacao">New Annotation</string>
+    <string name="editar">Edit</string>
+    <string name="remover">Remove</string>
 </resources>
