@@ -1,6 +1,7 @@
 package com.example.andre.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,8 +29,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if(contemPreferencias()){
+            Intent i = new Intent(this,CadastroTarefaActivity.class);
+            i.putExtra("temPreferencias", true);
+            startActivity(i);
+        }
         listViewTarefas = findViewById(R.id.listViewTarefas);
-
         listViewTarefas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -39,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-
         popularLista();
     }
 
@@ -58,12 +61,15 @@ public class MainActivity extends AppCompatActivity {
                 i = new Intent(this,CadastroTarefaActivity.class);
                 startActivity(i);
                 break;
-            case R.id.menuItemAtualizar:
-                popularLista();
-                break;
         }
         return true;
     }
+    @Override
+    public void onResume(){
+        super.onResume();
+        popularLista();
+    }
+
 
     private void popularLista(){
 
@@ -88,5 +94,21 @@ public class MainActivity extends AppCompatActivity {
             listViewTarefas.setAdapter(listaAdapter);
         }
 
+    }
+
+    private boolean contemPreferencias(){
+        SharedPreferences preferences = getSharedPreferences("MinhasPreferencias",MODE_PRIVATE);
+        String nomeTarefa = preferences.getString("nomeTarefa","");
+        String dataEntrega = preferences.getString("dataEntrega","");
+        boolean temPreferencias = nomeTarefa.isEmpty() == false || dataEntrega.isEmpty() == false;
+        return temPreferencias;
+        /*
+        Intent i;
+        if(temPreferencias){
+            i = new Intent(this,CadastroTarefaActivity.class);
+            i.putExtra("temPreferencias", true);
+            startActivity(i);
+        }
+        */
     }
 }
