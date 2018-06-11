@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    public static boolean aux = false;
     List tarefas;
     ListView listViewTarefas;
     private ArrayAdapter<Tarefa> listaAdapter;
@@ -33,12 +34,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.getSharedPreferences("MinhasPreferencias", MODE_PRIVATE).edit().clear().apply();
-        if(contemPreferencias()){
-            Intent i = new Intent(this,CadastroTarefaActivity.class);
-            i.putExtra("temPreferencias", true);
-            startActivity(i);
-        }
+        setTitle(getString(R.string.cadastro_de_atividades));
+
         listViewTarefas = findViewById(R.id.listViewTarefas);
         popularLista();
         listViewTarefas.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
@@ -59,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (totalSelecionados > 0){
 
-                    mode.setTitle("Lorem ipsum");
+                    mode.setTitle(R.string.selecionado);
                 }
 
                 mode.invalidate();
@@ -103,6 +100,16 @@ public class MainActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.menuItemRemover:
+                        for (int posicao = listViewTarefas.getChildCount(); posicao >= 0; posicao--){
+                            if (listViewTarefas.isItemChecked(posicao)){
+                                Tarefa tarefa = (Tarefa)(listViewTarefas.getAdapter().getItem(posicao));
+                                TarefaRepo repo = new TarefaRepo(MainActivity.this);
+                                repo.delete(tarefa);
+                                popularLista();
+                                Toast.makeText(MainActivity.this, R.string.tarefa_removida_com_sucesso,Toast.LENGTH_LONG).show();
+                            }
+                        }
+
                         mode.finish();
                         return true;
 
@@ -116,18 +123,22 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        /*
+
         listViewTarefas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Tarefa tarefa = (Tarefa)parent.getItemAtPosition(position);
-                Intent i = new Intent(MainActivity.this,CadastroTarefaActivity.class);
+                Intent i = new Intent(MainActivity.this,AnotacoesActivity.class);
                 i.putExtra("tarefa",tarefa);
                 startActivity(i);
             }
         });
-        */
 
+        if(contemPreferencias() && aux == false){
+            Intent i = new Intent(this,CadastroTarefaActivity.class);
+            i.putExtra("temPreferencias", true);
+            startActivity(i);
+        }
     }
 
     @Override
@@ -150,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
+        aux = true;
         popularLista();
     }
 

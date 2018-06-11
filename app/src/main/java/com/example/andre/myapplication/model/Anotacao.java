@@ -3,8 +3,10 @@ package com.example.andre.myapplication.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
+
 @DatabaseTable
-public class Anotacao {
+public class Anotacao implements Serializable {
     @DatabaseField(generatedId=true)
     private int id;
 

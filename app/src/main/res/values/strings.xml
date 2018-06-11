@@ -9,4 +9,12 @@
     <string name="nova_anotacao">New Annotation</string>
     <string name="editar">Edit</string>
     <string name="remover">Remove</string>
+    <string name="nova_tarefa_criada_com_sucesso">New task successfully created</string>
+    <string name="cadastro_de_atividades">Tasks Register</string>
+    <string name="nova_tarefa">New Task</string>
+    <string name="selecionado">Selected</string>
+    <string name="editar_tarefa">Edit Task</string>
+    <string name="tarefa_atualizada_com_sucesso">Successfully updated task</string>
+    <string name="anotacao_removida_com_sucesso">Tarefa removida com sucesso</string>
+    <string name="tarefa_removida_com_sucesso">Tarefa removida com sucesso</string>
 </resources>

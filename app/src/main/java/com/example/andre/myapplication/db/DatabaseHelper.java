@@ -22,7 +22,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "teste.sqlite";
 
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION =13;
+    private static final int DATABASE_VERSION =18;
 
     // the DAO object we use to access the SimpleData table
     //pressure
@@ -39,6 +39,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             TableUtils.createTable(connectionSource, Tarefa.class);
             TableUtils.createTable(connectionSource,Anotacao.class);
+            //Dao<Tarefa, Integer> dao = getTarefaDao();
+            //Dao<Anotacao,Integer> dao2 = getAnotacaoDao();
+            //dao.executeRaw("insert into tarefa (nome,dataCriacao) values (\"Teste\", \"20/12/2018\")");
+            //dao2.executeRaw("insert into anotacao (texto, tarefa_id) values (\"TESTE ANOTACAO\",1)") ;
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -52,9 +56,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase db,ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
 
-            Dao<Tarefa, Integer> dao = getTarefaDao();
+
+
             TableUtils.dropTable(connectionSource,Tarefa.class,true);
             TableUtils.dropTable(connectionSource,Anotacao.class,true);
+
             onCreate(db,connectionSource);
         } catch (Exception e) {
             Log.e(DatabaseHelper.class.getName(), "exception during onUpgrade", e);

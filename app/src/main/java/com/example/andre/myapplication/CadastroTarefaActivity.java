@@ -28,18 +28,18 @@ public class CadastroTarefaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_tarefa);
+
         editTextNomeTarefa = findViewById(R.id.editTextNomeTarefa);
         editTextDataEntrega = findViewById(R.id.editTextDataCriacao);
         btnSalvar = findViewById(R.id.buttonSalvar);
         btnCancelar = findViewById(R.id.buttonCancelar);
         if(getIntent().getBooleanExtra("temPreferencias",false)){
-            tarefa = new Tarefa();
             getPreferences();
         }
         tarefa = (Tarefa)getIntent().getSerializableExtra("tarefa");
         popularCampos(tarefa);
         final boolean novaTarefa = tarefa == null;
-
+        setTitle(novaTarefa ? (R.string.nova_tarefa) : (R.string.editar_tarefa));
 
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +57,8 @@ public class CadastroTarefaActivity extends AppCompatActivity {
                 CadastroTarefaActivity.this.finish();
             }
         });
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -75,7 +77,10 @@ public class CadastroTarefaActivity extends AppCompatActivity {
 
     private void setPreferences(boolean ehEdicao){
         if(ehEdicao){
-            this.getSharedPreferences("MinhasPreferencias", MODE_PRIVATE).edit().clear().apply();
+            SharedPreferences.Editor editor = this.getSharedPreferences("MinhasPreferencias", MODE_PRIVATE).edit();
+            editor.remove("nomeTarefa");
+            editor.remove("dataEntrega");
+            editor.apply();
         }else{
             this.sharedPreferences = getSharedPreferences("MinhasPreferencias",MODE_PRIVATE);
             SharedPreferences.Editor editor = this.sharedPreferences.edit();
@@ -104,7 +109,7 @@ public class CadastroTarefaActivity extends AppCompatActivity {
         tarefa.setDataCriacao(Calendar.getInstance().getTime().toString());
         TarefaRepo repo = new TarefaRepo(getApplicationContext());
         repo.create(tarefa);
-        Toast.makeText(this,"Nova tarefa criada com sucesso",Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.nova_tarefa_criada_com_sucesso,Toast.LENGTH_LONG).show();
         CadastroTarefaActivity.this.finish();
     }
 
@@ -114,7 +119,7 @@ public class CadastroTarefaActivity extends AppCompatActivity {
             tarefa.setNome(editTextNomeTarefa.getText().toString());
             tarefa.setDataCriacao(editTextDataEntrega.getText().toString());
             repo.update(tarefa);
-            Toast.makeText(this,"Tarefa atualizada com sucesso",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.tarefa_atualizada_com_sucesso,Toast.LENGTH_LONG).show();
         }
     }
 

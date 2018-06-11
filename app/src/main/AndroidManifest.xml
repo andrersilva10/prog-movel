@@ -16,8 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CadastroTarefaActivity" />
-        <activity android:name=".AnotacoesActivity"></activity>
+        <activity android:name=".CadastroTarefaActivity" android:parentActivityName=".MainActivity"/>
+        <activity android:name=".AnotacoesActivity" android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>

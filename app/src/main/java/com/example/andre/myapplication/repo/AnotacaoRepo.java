@@ -5,6 +5,10 @@ import android.content.Context;
 import com.example.andre.myapplication.db.DatabaseHelper;
 import com.example.andre.myapplication.db.DatabaseManager;
 import com.example.andre.myapplication.model.Anotacao;
+import com.example.andre.myapplication.model.Tarefa;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -83,5 +87,25 @@ public class AnotacaoRepo implements  Crud {
         }
 
         return items;
+    }
+
+    public List<?> findByTarefaId(int id){
+        List<Anotacao> items = null;
+        try{
+            QueryBuilder<Anotacao, Integer> qb = helper.getAnotacaoDao().queryBuilder();
+            return qb.where().eq("tarefa_id", id).query();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return items;
+    }
+
+    public void insertRaw(Anotacao anotacao){
+        try{
+            helper.getAnotacaoDao().executeRaw("insert into anotacao (texto,tarefa_id) values (\""+anotacao.getTexto()+"\","+anotacao.getTarefa().getId()+")");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

@@ -1,2 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="menuItemNovo">Nova Tarefa</string>
+    <string name="nome">Nome</string>
+    <string name="salvar">Salvar</string>
+    <string name="data_entrega">Data de entrega</string>
+    <string name="cancelar">cancelar</string>
+    <string name="atualizar">Recarregar</string>
+    <string name="nova_anotacao">Nova anotação</string>
+    <string name="editar">Editar</string>
+    <string name="nova_tarefa_criada_com_sucesso">Nova tarefa criada com sucesso</string>
+    <string name="cadastro_de_atividades">Cadastro de atividades</string>
+    <string name="nova_tarefa">Nova Tarefa</string>
+    <string name="selecionado">Selecionado</string>
+    <string name="editar_tarefa">Editar Tarefa</string>
+    <string name="tarefa_atualizada_com_sucesso">Tarefa atualizada com sucesso</string>
+    <string name="anotacao_removida_com_sucesso">Tarefa removida com sucesso</string>
+    <string name="tarefa_removida_com_sucesso">Tarefa removida com sucesso</string>
+</resources>
